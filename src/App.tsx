@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import useFixedMeasureCbRef from "./hooks/useFixedMeasureCbRef";
+import useFixedMeasureRef from "./hooks/useFixedMeasureRef";
+
+const flexCentered = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  flexDirection: "column",
+} as React.CSSProperties;
+
+const measureTagStyle = {
+  width: 550,
+  height: 50,
+  textAlign: "center",
+} as React.CSSProperties;
+
+function FixedMeasurementsWithCbRef() {
+  const { dimensions, fixedMeasureRef } = useFixedMeasureCbRef();
+
+  const Tag = "h1";
+
+  return (
+    <div style={flexCentered}>
+      <Tag style={measureTagStyle} ref={fixedMeasureRef}>
+        This is measured with callback ref
+      </Tag>
+
+      <span>
+        {Tag} dimensions: {JSON.stringify(dimensions)}
+      </span>
+    </div>
+  );
+}
+
+function FixedMeasurementsWithRef() {
+  const { dimensions, fixedMeasureRef } = useFixedMeasureRef();
+  const Tag = "h1";
+
+  return (
+    <div style={flexCentered}>
+      <Tag style={measureTagStyle} ref={fixedMeasureRef}>
+        This is measured with ref
+      </Tag>
+      <span>
+        {Tag} dimensions: {JSON.stringify(dimensions)}
+      </span>
+    </div>
+  );
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FixedMeasurementsWithCbRef />
+      <FixedMeasurementsWithRef />
     </div>
   );
 }
